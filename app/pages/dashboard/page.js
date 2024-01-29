@@ -59,10 +59,13 @@ export default function Dashboard() {
         }
     }
 
-    let screen;
-    if (typeof window !== 'undefined') {
-        [screen, setScreen] = useState(url.searchParams.get("tab"));
-    }
+    const [screen, setScreen] = useState("resumo");
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setScreen(url.searchParams.get("tab"));
+        }
+    }, []);
 
 
     function getTab() {
