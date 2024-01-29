@@ -17,6 +17,11 @@ import Campaigns from "@/app/components/layouts/Campaigns";
 
 export default function Dashboard() {
 
+    let url;
+    if (typeof window !== 'undefined') {
+        url = new URL(window.location.href);
+    }
+
     if (typeof window !== 'undefined') {
         var token = localStorage.getItem("token");
     }
@@ -43,7 +48,7 @@ export default function Dashboard() {
 
     if (!token) {
         if (typeof window !== 'undefined') {
-        window.location.replace("/");
+            window.location.replace("/");
         }
     }
 
@@ -54,10 +59,11 @@ export default function Dashboard() {
         }
     }
 
+    let screen;
     if (typeof window !== 'undefined') {
-        var url = new URL(window.location.href);
+        [screen, setScreen] = useState(url.searchParams.get("tab"));
     }
-    const [screen, setScreen] = useState(url.searchParams.get("tab"));
+
 
     function getTab() {
         const url = new URL(window.location.href);
