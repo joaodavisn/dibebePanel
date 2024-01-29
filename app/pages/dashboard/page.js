@@ -44,8 +44,10 @@ export default function Dashboard() {
     }
 
     function logout() {
-        localStorage.removeItem("token");
-        window.location.replace("/");
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem("token");
+            window.location.replace("/");
+        }
     }
 
     const url = new URL(window.location.href);

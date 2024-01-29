@@ -38,8 +38,8 @@ export default function Home() {
         if (data.success) {
           if (typeof window !== 'undefined') {
             localStorage.setItem("token", JSON.stringify(data));
+            window.location.replace("/pages/dashboard?tab=resumo");
           }
-          window.location.replace("/pages/dashboard?tab=resumo");
         }
       } else {
         const data = await response.json();
