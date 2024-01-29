@@ -35,7 +35,9 @@ export default function Register() {
             });
 
             if (response.ok) {
-                window.location.replace("/");
+                if (typeof window !== 'undefined') {
+                    window.location.replace("/");
+                }
             } else {
                 const data = await response.json();
                 setError(data.error);
