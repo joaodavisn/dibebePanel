@@ -17,7 +17,9 @@ import Campaigns from "@/app/components/layouts/Campaigns";
 
 export default function Dashboard() {
 
-    const token = localStorage.getItem("token");
+    if (typeof window !== 'undefined') {
+        var token = localStorage.getItem("token");
+    }
 
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
