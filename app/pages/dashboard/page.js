@@ -42,7 +42,9 @@ export default function Dashboard() {
     }, [token]);
 
     if (!token) {
+        if (typeof window !== 'undefined') {
         window.location.replace("/");
+        }
     }
 
     function logout() {
@@ -52,7 +54,9 @@ export default function Dashboard() {
         }
     }
 
-    const url = new URL(window.location.href);
+    if (typeof window !== 'undefined') {
+        var url = new URL(window.location.href);
+    }
     const [screen, setScreen] = useState(url.searchParams.get("tab"));
 
     function getTab() {
@@ -67,9 +71,13 @@ export default function Dashboard() {
 
     function setTab(tab) {
         setScreen(tab);
-        const url = new URL(window.location.href);
+        if (typeof window !== 'undefined') {
+            var url = new URL(window.location.href);
+        }
         url.searchParams.set("tab", tab);
-        window.history.replaceState({}, '', url);
+        if (typeof window !== 'undefined') {
+            window.history.replaceState({}, '', url);
+        }
     }
 
     useEffect(() => {

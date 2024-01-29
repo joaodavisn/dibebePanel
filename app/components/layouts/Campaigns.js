@@ -37,7 +37,9 @@ export default function Campaigns({ userId }) {
         const data = await response.json();
         if (data.success) {
           setNewCampaign(false);
-          window.location.reload();
+          if (typeof window !== 'undefined') {
+            window.location.reload();
+          }
         }
       } else {
         const data = await response.json();
