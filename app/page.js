@@ -36,7 +36,9 @@ export default function Home() {
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
-          localStorage.setItem("token", JSON.stringify(data));
+          if (typeof window !== 'undefined') {
+            localStorage.setItem("token", JSON.stringify(data));
+          }
           window.location.replace("/pages/dashboard?tab=resumo");
         }
       } else {
