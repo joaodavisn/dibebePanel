@@ -4,7 +4,7 @@ import mamarooImage from "@/sources/media/images/mamaroo.png"
 import pingImage from "@/sources/media/images/ping.png"
 import Vr from "../Vr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faCubes, faDollarSign, faStickyNote, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faCubes, faDollarSign, faPlus, faStickyNote, faUpload } from "@fortawesome/free-solid-svg-icons";
 import RentingItem from "../RentingItem";
 import RentingProduct from "../RentingProduct";
 export default function Products() {
@@ -19,7 +19,9 @@ export default function Products() {
 
   return (
     <div className="w-full h-full flex flex-col justify-start  items-center bg-transparent">
-
+      <button className="absolute bottom-12 right-8 w-fit text-sm bg-[#ffffff] hover:bg-[#FAABB0] hover:text-[#ffffff] text-[#FAABB0] font-bold py-2 px-4 rounded-full ring-2 ring-[#FAABB0] gap-2 flex flex-row items-center">
+        Novo produto<FontAwesomeIcon icon={faPlus} />
+      </button>
       <div className="w-full h-fit flex flex-row gap-2 justify-start items-center">
         {/* <button
           onClick={() => setTab("produtos")}
