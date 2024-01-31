@@ -17,6 +17,7 @@ export default function Campaigns({ userId }) {
   const [showCampaingDetails, setShowCampaignDetails] = useState(false);
   const [campaignDetails, setCampaignDetails] = useState([]);
   const [chartRendered, setChartRendered] = useState(false);
+  const [campaignCreator, setCampaignCreator] = useState("");
 
   function getDeviceOrigin(userAgent) {
     if (userAgent.includes("WhatsApp")) {
@@ -214,14 +215,30 @@ export default function Campaigns({ userId }) {
     });
   };
 
+  const getAdminData = async (userId) => {
+    try {
+      const response = await fetch(`https://api.dibebe.net/functions.php?getAdmin=${userId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setCampaignCreator(data.name);
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
+
 
   const handleCampaignDetails = async (campaignId) => {
+    
     try {
       const response = await fetch(`https://api.dibebe.net/functions.php?getCampaignDetails=${campaignId}`);
       if (response.ok) {
         const data = await response.json();
         setCampaignDetails(data);
         setShowCampaignDetails(true);
+        getAdminData(data[0].createdBy);
         setChartRendered(false);
       } else {
         // Handle error
@@ -262,7 +279,26 @@ export default function Campaigns({ userId }) {
       {showCampaingDetails &&
         <Modal modalTitle={"Detalhes da campanha"} closeClick={() => { setShowCampaignDetails(!showCampaingDetails) }}>
           <div className="text-center flex flex-col justify-start items-center gap-4 w-full overflow-auto">
-            <canvas id="activityChart" width="400" height="200"></canvas>
+            <p className="text-xl my-12 font-normal text-neutral-600">
+              Detalhes da campanha
+            </p>
+            <div className="w-full flex flex-row justify-between items-center gap-4">
+              <div className="flex flex-col justify-start items-start gap-2">
+                {campaignDetails.map(campaign => (
+                  <div className="flex flex-col justify-start items-start gap-2">
+                    <p className="text-left">Nome da campanha: {campaign.campaign}</p>
+                    <p className="text-left">Descrição da campanha: {campaign.description}</p>
+                    <div className="flex flex-row justify-start items-start gap-2">
+                      <p className="text-left">Criada por:</p>
+                      <p className="text-left font-bold">{campaignCreator}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="w-fit h-fit p-2">
+              <canvas id="activityChart" width="600" height="300"></canvas>
+            </div>
             <canvas id="devicesChart" width="100" height="100"></canvas>
           </div>
         </Modal>
