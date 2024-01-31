@@ -16,7 +16,9 @@ export default function Modal({ children, modalTitle, closeClick }) {
                         <FontAwesomeIcon icon={faClose} />
                     </button>
                 </div>
+                <div className="p-4 text-center items-center w-full h-[90%] justify-center flex flex-col">
                 {children}
+                </div>
             </div>
         </div>
     )

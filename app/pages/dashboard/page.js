@@ -59,7 +59,7 @@ export default function Dashboard() {
         }
     }
 
-    const [screen, setScreen] = useState("resumo");
+    const [screen, setScreen] = useState("");
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
