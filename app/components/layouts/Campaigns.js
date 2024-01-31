@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import moment from 'moment';
 import Chart from 'chart.js/auto';
-
+import Image from "next/image";
+import Loading from "../Loading";
+import CornerButton from "../CornerButton";
 export default function Campaigns({ userId }) {
 
   const [newCampaign, setNewCampaign] = useState(false);
@@ -75,28 +77,15 @@ export default function Campaigns({ userId }) {
         }
       } else {
         const data = await response.json();
-        // setError(data.error);
-        // setShowError(true);
+
       }
     } catch (error) {
-      // setError("An error occurred. Please try again later.");
-      // setShowError(true);
     }
   };
 
-
-
-
-
   if (!campaigns || campaigns.length === 0) {
     return (
-      <div className="w-full h-full flex flex-col justify-start items-center bg-white">
-        <div className="w-full h-fit gap-4 flex flex-col">
-          <p className="text-xl my-12 font-normal text-neutral-600">
-            Carregando campanhas...
-          </p>
-        </div>
-      </div>
+      <Loading />
     )
   }
 
@@ -229,9 +218,8 @@ export default function Campaigns({ userId }) {
     }
   }
 
-
   const handleCampaignDetails = async (campaignId) => {
-    
+
     try {
       const response = await fetch(`https://api.dibebe.net/functions.php?getCampaignDetails=${campaignId}`);
       if (response.ok) {
@@ -247,8 +235,6 @@ export default function Campaigns({ userId }) {
       // Handle error
     }
   }
-
-
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center bg-white">
@@ -284,15 +270,15 @@ export default function Campaigns({ userId }) {
             </p>
             <div className="w-full flex flex-row justify-between items-center gap-4">
               <div className="flex flex-col justify-start items-start gap-2">
-              
-                  <div className="flex flex-col justify-start items-start gap-2">
-                    <p className="text-left">Nome da campanha: {campaignDetails[0].campaign}</p>
-                    <p className="text-left">Descrição da campanha: {campaignDetails[0].description}</p>
-                    <div className="flex flex-row justify-start items-start gap-2">
-                      <p className="text-left">Criada por:</p>
-                      <p className="text-left font-bold">{campaignCreator}</p>
-                    </div>
+
+                <div className="flex flex-col justify-start items-start gap-2">
+                  <p className="text-left">Nome da campanha: {campaignDetails[0].campaign}</p>
+                  <p className="text-left">Descrição da campanha: {campaignDetails[0].description}</p>
+                  <div className="flex flex-row justify-start items-start gap-2">
+                    <p className="text-left">Criada por:</p>
+                    <p className="text-left font-bold">{campaignCreator}</p>
                   </div>
+                </div>
               </div>
             </div>
             <div className="w-fit h-fit p-2">
@@ -315,9 +301,7 @@ export default function Campaigns({ userId }) {
           />
         ))}
       </div>
-      <button className="absolute bottom-12 right-8 w-fit text-sm bg-[#ffffff] hover:bg-[#FAABB0] hover:text-[#ffffff] text-[#FAABB0] font-bold py-2 px-4 rounded-full ring-2 ring-[#FAABB0] gap-2 flex flex-row items-center" onClick={() => { setNewCampaign(!newCampaign) }}>
-        Nova campanha<FontAwesomeIcon icon={faPlus} />
-      </button>
+      <CornerButton onClick={() => { setNewCampaign(!newCampaign) }} title={"Nova campanha"} />
     </div>
   )
 }

@@ -150,15 +150,15 @@ export default function Dashboard() {
                     <SideButton icon={faShop} text="Resumo" onClick={() => [setScreen("resumo"), setTab("resumo")]} selected={screen === "resumo"} />
                     <SideButton icon={faTruck} text="Entregas" onClick={() => [setScreen("entregas"), setTab("entregas")]} selected={screen === "entregas"} />
                     <SideButton icon={faCubes} text="Produtos" onClick={() => [setScreen("produtos"), setTab("produtos")]} selected={screen === "produtos"} />
-                    <SideButton icon={faNoteSticky} text="Alugueis" onClick={() => [setScreen("alugueis"), setTab("alugueis")]} selected={screen === "alugueis"} />
-                    <SideButton icon={faPhone} text="CRM" onClick={() => [setScreen("crm"), setTab("crm")]} selected={screen === "crm"} />
-                    <SideButton icon={faUsers} text="Clientes" onClick={() => [setScreen("clientes"), setTab("clientes")]} selected={screen === "clientes"} />
+                    {/* <SideButton icon={faNoteSticky} text="Alugueis" onClick={() => [setScreen("alugueis"), setTab("alugueis")]} selected={screen === "alugueis"} /> */}
+                    {/* <SideButton icon={faPhone} text="CRM" onClick={() => [setScreen("crm"), setTab("crm")]} selected={screen === "crm"} /> */}
+                    {/* <SideButton icon={faUsers} text="Clientes" onClick={() => [setScreen("clientes"), setTab("clientes")]} selected={screen === "clientes"} /> */}
                     <SideButton icon={faBullhorn} text="Campanhas" onClick={() => [setScreen("campanhas"), setTab("campanhas")]} selected={screen === "campanhas"} />
                 </div>
                 <div className="flex flex-col gap-2 w-full">
                     <div className="w-full h-[1px] bg-gray-300"></div>
-                    <SideButton icon={faCog} text="Configurações" onClick={() => [setScreen("configuracoes"), setTab("configuracoes")]} selected={screen === "configuracoes"} />
-                    <SideButton icon={faWrench} text="Gerenciador" onClick={() => [setScreen("gerenciador"), setTab("gerenciador")]} selected={screen === "gerenciador"} />
+                    {/* <SideButton icon={faCog} text="Configurações" onClick={() => [setScreen("configuracoes"), setTab("configuracoes")]} selected={screen === "configuracoes"} /> */}
+                    {/* <SideButton icon={faWrench} text="Gerenciador" onClick={() => [setScreen("gerenciador"), setTab("gerenciador")]} selected={screen === "gerenciador"} /> */}
                     <button
                         className="w-full py-2 px-3 bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full flex flex-row items-center justify-between gap-2" onClick={() => { setConfirmLogout(!confirmLogout) }}>Sair<FontAwesomeIcon icon={faSignOut} /></button>
 

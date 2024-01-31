@@ -7,10 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faCubes, faDollarSign, faPlus, faStickyNote, faUpload } from "@fortawesome/free-solid-svg-icons";
 import RentingItem from "../RentingItem";
 import RentingProduct from "../RentingProduct";
+import CornerButton from "../CornerButton";
+import Modal from "../Modal";
 export default function Products() {
+
   const [itemModel, setItemModel] = useState("");
   const [tab, setTab] = useState("alugueis");
-
+  const [showRentItem, setShowRentItem] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchChange = (event) => {
@@ -19,11 +22,9 @@ export default function Products() {
 
   return (
     <div className="w-full h-full flex flex-col justify-start  items-center bg-transparent">
-      <button className="absolute bottom-12 right-8 w-fit text-sm bg-[#ffffff] hover:bg-[#FAABB0] hover:text-[#ffffff] text-[#FAABB0] font-bold py-2 px-4 rounded-full ring-2 ring-[#FAABB0] gap-2 flex flex-row items-center">
-        Novo produto<FontAwesomeIcon icon={faPlus} />
-      </button>
+
       <div className="w-full h-fit flex flex-row gap-2 justify-start items-center">
-        {/* <button
+        <button
           onClick={() => setTab("produtos")}
           className={`w-fit py-2 px-5 
           ${tab === "produtos" ? "bg-[#FAABB0] border-[#faabb0] border-solid border-t-[2px] border-l-[2px] border-r-[2px] text-[#ffffff]" :
@@ -33,7 +34,7 @@ export default function Products() {
         >
           Produtos
           <FontAwesomeIcon icon={faCubes} />
-        </button> */}
+        </button>
         <button
           onClick={() => setTab("alugueis")}
           className={`w-fit py-2 px-5 
@@ -46,9 +47,14 @@ export default function Products() {
           <FontAwesomeIcon icon={faStickyNote} />
         </button>
       </div>
+
       {tab === "alugueis" && <div className="w-full h-full flex flex-col gap-2 overflow-y-auto 
       overflow-x-auto justify-start p-4 items-start border-[#faabb0] border-solid 
       border-[2px] rounded-b-lg rounded-tr-lg">
+        { showRentItem && <Modal modalTitle="Alugar item" closeClick={() => {setShowRentItem(!showRentItem)}}>
+
+        </Modal>}
+        <CornerButton onClick={() => {setShowRentItem(!showRentItem)}} title="Alugar item" />
         <input
           className="w-full h-10 px-3 rounded-full border-2 border-neutral-200 focus:outline-none focus:border-[#FAABB0]"
           type="text"
@@ -58,6 +64,7 @@ export default function Products() {
         />
         <RentingProduct itemImage={mamarooImage} itemType={"Mamaroo"} itemStatus={"pronto"} itemModel={"Mamaroo 4 moms"} />
       </div>}
+
       {tab === "produtos" && <div className="w-full h-full flex flex-col gap-2 overflow-y-auto 
       overflow-x-auto justify-start p-4 items-start border-[#faabb0] border-solid 
       border-[2px] rounded-b-lg rounded-tr-lg">
