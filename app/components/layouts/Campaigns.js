@@ -284,16 +284,15 @@ export default function Campaigns({ userId }) {
             </p>
             <div className="w-full flex flex-row justify-between items-center gap-4">
               <div className="flex flex-col justify-start items-start gap-2">
-                {campaignDetails.map(campaign => (
+              
                   <div className="flex flex-col justify-start items-start gap-2">
-                    <p className="text-left">Nome da campanha: {campaign.campaign}</p>
-                    <p className="text-left">Descrição da campanha: {campaign.description}</p>
+                    <p className="text-left">Nome da campanha: {campaignDetails[0].campaign}</p>
+                    <p className="text-left">Descrição da campanha: {campaignDetails[0].description}</p>
                     <div className="flex flex-row justify-start items-start gap-2">
                       <p className="text-left">Criada por:</p>
                       <p className="text-left font-bold">{campaignCreator}</p>
                     </div>
                   </div>
-                ))}
               </div>
             </div>
             <div className="w-fit h-fit p-2">
