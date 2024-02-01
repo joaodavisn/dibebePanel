@@ -6,6 +6,7 @@ import Vr from "../Vr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faDollarSign, faUpload } from "@fortawesome/free-solid-svg-icons";
 import RentingItem from "../RentingItem";
+import Modal from "../Modal";
 export default function Rentings() {
   const [itemModel, setItemModel] = useState("");
   const itemModels = ["Mamaroos", "Cadeirinhas", "Carrinhos"];

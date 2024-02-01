@@ -251,7 +251,7 @@ export default function Campaigns({ userId, level }) {
       }
       {newCampaign &&
         <Modal modalTitle={"Nova campanha"} closeClick={() => { setNewCampaign(!newCampaign) }}>
-          <p className="text-[90pt] font-normal text-neutral-600">➕</p>
+          <p className="text-[60pt] font-normal text-neutral-600">➕</p>
           <div className="p-1 text-center">
             <p className="text-xl my-2 font-normal text-neutral-600">
               Preencha os campos abaixo para criar uma nova campanha.
@@ -278,7 +278,7 @@ export default function Campaigns({ userId, level }) {
         <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-[2px] z-[999] p-8">
           {showEditCampaign &&
             <Modal modalTitle={"Editar Campanha"} closeClick={() => { setShowEditCampaign(!showEditCampaign) }}>
-              <p className="text-[90pt] font-normal text-neutral-600">✏️</p>
+              <p className="text-[60pt] font-normal text-neutral-600">✏️</p>
               <div className="p-1 text-center">
                 <p className="text-xl my-2 font-normal text-neutral-600">
                   Preencha os campos abaixo para editar a campanha.
