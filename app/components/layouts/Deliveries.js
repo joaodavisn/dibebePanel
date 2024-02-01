@@ -207,7 +207,7 @@ export default function Deliveries() {
           </div>
         </Modal>
       )}
-      <div className="w-full h-32 px-6">
+      <div className="w-full h-32">
         <input
           className="w-full h-10 px-3 rounded-full border-2 border-neutral-200 focus:outline-none focus:border-[#FAABB0]"
           type="text"
