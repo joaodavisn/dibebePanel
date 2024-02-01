@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CampaignItem from "../CampaignItem";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import moment from 'moment';
@@ -20,6 +20,7 @@ export default function Campaigns({ userId }) {
   const [campaignDetails, setCampaignDetails] = useState([]);
   const [chartRendered, setChartRendered] = useState(false);
   const [campaignCreator, setCampaignCreator] = useState("");
+  const [showEditCampaign, setShowEditCampaign] = useState(false);
 
   function getDeviceOrigin(userAgent) {
     if (userAgent.includes("WhatsApp")) {
@@ -120,13 +121,14 @@ export default function Campaigns({ userId }) {
         labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
         datasets: [
           {
-            label: 'Acessos por horário',
+            label: 'Acessos',
+            animation: true,
+            fill: true,
             data: chartData,
             backgroundColor: 'rgba(250, 171, 176, 0.2)',
             borderColor: '#faabb0',
             borderWidth: 2,
             borderRadius: 10,
-            tension: 0.3
           },
         ],
       },
@@ -263,31 +265,91 @@ export default function Campaigns({ userId }) {
         </Modal>
       }
       {showCampaingDetails &&
-        <Modal modalTitle={"Detalhes da campanha"} closeClick={() => { setShowCampaignDetails(!showCampaingDetails) }}>
-          <div className="text-center flex flex-col justify-start items-center gap-4 w-full overflow-auto">
-            <p className="text-xl my-12 font-normal text-neutral-600">
-              Detalhes da campanha
-            </p>
-            <div className="w-full flex flex-row justify-between items-center gap-4">
-              <div className="flex flex-col justify-start items-start gap-2">
-
-                <div className="flex flex-col justify-start items-start gap-2">
-                  <p className="text-left">Nome da campanha: {campaignDetails[0].campaign}</p>
-                  <p className="text-left">Descrição da campanha: {campaignDetails[0].description}</p>
-                  <div className="flex flex-row justify-start items-start gap-2">
-                    <p className="text-left">Criada por:</p>
-                    <p className="text-left font-bold">{campaignCreator}</p>
+        <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-[2px] z-[999] p-8">
+          {showEditCampaign &&
+            <Modal modalTitle={"Editar Campanha"} closeClick={() => { setShowEditCampaign(!showEditCampaign) }}>
+              <div className="p-1 text-center">
+                <p className="text-xl my-2 font-normal text-neutral-600">
+                  Preencha os campos abaixo para editar a campanha.
+                </p>
+                <form className="flex flex-col justify-start items-center gap-4" onSubmit={handleSubmit}>
+                  <label className="w-full flex flex-col justify-start items-start">
+                    <p className="text-left">Nome da campanha</p>
+                    <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="Um título para ser fácil de identificar" type="text" value={campaignName} onChange={(event) => { setCampaignName(event.target.value) }} />
+                  </label>
+                  <label className="w-full flex flex-col justify-start items-start">
+                    <p className="text-left">Descrição da campanha</p>
+                    <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="Uma descrição breve desta campanha" type="text" value={campaignDescription} onChange={(event) => { setCampaignDescription(event.target.value) }} />
+                  </label>
+                  <label className="w-full flex flex-col justify-start items-start">
+                    <p className="text-left">Destino da campanha</p>
+                    <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="O link para onde a campanha deve levar" type="text" value={campaignDestination} onChange={(event) => { setCampaignDestination(event.target.value) }} />
+                  </label>
+                  <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full mt-10 py-4 px-8" type="submit">Editar campanha</button>
+                </form>
+              </div>
+            </Modal>
+          }
+          <div className="w-full h-full bg-[#f7f7f7] p-1 rounded-2xl ring-2 ring-neutral-300">
+            <div className="w-full h-fit flex flex-row justify-between py-2 pl-4 pr-2">
+              <p className="text-xl font-normal text-neutral-600">
+                Detalhes da campanha
+              </p>
+              <button
+                className="w-8 h-8 bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full"
+                onClick={() => { setShowCampaignDetails(!showCampaingDetails) }}
+              >
+                <FontAwesomeIcon icon={faClose} />
+              </button>
+            </div>
+            <div className="text-center flex flex-col justify-start items-center gap-4 w-full overflow-auto p-2">
+              <div className="w-full flex flex-row justify-start p-4 items-center gap-4">
+                <div className="flex flex-col justify-center items-start gap-2">
+                  <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-fit h-fit flex flex-col justify-between items-start gap-4">
+                    <div className="flex flex-row justify-start items-start gap-2">
+                      <p className="text-left">Nome da campanha:</p>
+                      <p className="text-left font-bold">{campaignDetails[0].campaign}</p>
+                    </div>
+                    <div className="flex flex-row justify-start items-start gap-2">
+                      <p className="text-left">Descrição da campanha:</p>
+                      <p className="text-left font-bold">{campaignDetails[0].description}</p>
+                    </div>
+                    <div className="flex flex-row justify-start items-start gap-2">
+                      <p className="text-left">Cliques no link:</p>
+                      <p className="text-left font-bold">{campaignDetails[0].uses}</p>
+                    </div>
+                    <div className="flex flex-row justify-start items-start gap-2">
+                      <p className="text-left">Criada por:</p>
+                      <p className="text-left font-bold">{campaignCreator}</p>
+                    </div>
+                    <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full py-2 px-4" onClick={() => { setShowEditCampaign(!showEditCampaign) }}>Editar campanha</button>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full h-[1px] bg-neutral-300"></div>
+              <div className="w-full h-fit flex flex-row justify-start gap-4 items-center p-4">
+                <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-fit h-fit flex flex-col justify-between items-center gap-4">
+                  <p className="text-xl font-normal text-neutral-600">
+                    Atividade por horário
+                  </p>
+                  <div className="w-fit h-fit p-2">
+                    <canvas id="activityChart" width="600" height="300"></canvas>
+                  </div>
+                </div>
+                <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-fit h-fit flex flex-col justify-between items-center gap-4">
+                  <p className="text-xl font-normal text-neutral-600">
+                    Origem dos acessos
+                  </p>
+                  <div className="w-fit h-fit p-2">
+                    <canvas id="devicesChart" width="300" height="200"></canvas>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-fit h-fit p-2">
-              <canvas id="activityChart" width="600" height="300"></canvas>
-            </div>
-            <canvas id="devicesChart" width="100" height="100"></canvas>
           </div>
-        </Modal>
+        </div>
       }
+
       <div className="w-full h-fit gap-4 flex flex-col">
         {campaigns.map(campaign => (
           <CampaignItem
