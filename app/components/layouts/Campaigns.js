@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CampaignItem from "../CampaignItem";
-import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPencil, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import moment from 'moment';
@@ -333,7 +333,10 @@ export default function Campaigns({ userId, level }) {
                       <p className="text-left">Criada por:</p>
                       <p className="text-left font-bold">{campaignCreator}</p>
                     </div>
-                    <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full py-2 px-4" onClick={() => { setShowEditCampaign(!showEditCampaign) }}>Editar campanha</button>
+                    <div className="w-full h-fit flex flex-row gap-2">
+                      <button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full flex flex-row items-center justify-center gap-2 py-2 px-4" onClick={() => { setShowEditCampaign(!showEditCampaign) }}><FontAwesomeIcon icon={faPencil} />Editar</button>
+                      <button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full flex flex-row items-center justify-center gap-2 py-2 px-4" onClick={() => { setShowEditCampaign(!showEditCampaign) }}><FontAwesomeIcon icon={faTrashAlt} />Excluir</button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -20,7 +20,7 @@ export default function Home() {
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
-
+  
     try {
       const response = await fetch(
         "https://api.dibebe.net/functions.php",
@@ -32,23 +32,29 @@ export default function Home() {
           body: `authAdmin&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
         }
       );
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        const data = await response.json();
         if (data.success) {
           if (typeof window !== 'undefined') {
             localStorage.setItem("token", JSON.stringify(data));
             window.location.replace("/pages/dashboard?tab=resumo");
           }
+        } else {
+          setError(data.error);
+          setShowError(true);
+          setLoading(false);
         }
       } else {
-        const data = await response.json();
         setError(data.error);
         setShowError(true);
+        setLoading(false);
       }
     } catch (error) {
       setError("An error occurred. Please try again later.");
       setShowError(true);
+      setLoading(false);
     }
   };
 
