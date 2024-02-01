@@ -2,7 +2,7 @@
 import Image from "next/image";
 import logo from "/sources/media/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBullhorn, faClose, faCog, faCubes, faNoteSticky, faPhone, faShop, faSignOut, faTruck, faUsers, faWrench } from "@fortawesome/free-solid-svg-icons";
+import { faBullhorn, faClose, faCog, faCubes, faNoteSticky, faPhone, faShop, faSignOut, faToolbox, faTruck, faUsers, faWrench } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Deliveries from "@/app/components/layouts/Deliveries";
 import Rentings from "@/app/components/layouts/Rentings";
@@ -14,6 +14,7 @@ import Customers from "@/app/components/layouts/Customers";
 import Manager from "@/app/components/layouts/Manager";
 import SideButton from "@/app/components/SideButton";
 import Campaigns from "@/app/components/layouts/Campaigns";
+import Tools from "@/app/components/layouts/Tools";
 
 export default function Dashboard() {
 
@@ -157,6 +158,7 @@ export default function Dashboard() {
                     {/* <SideButton icon={faPhone} text="CRM" onClick={() => [setScreen("crm"), setTab("crm")]} selected={screen === "crm"} /> */}
                     {/* <SideButton icon={faUsers} text="Clientes" onClick={() => [setScreen("clientes"), setTab("clientes")]} selected={screen === "clientes"} /> */}
                     <SideButton icon={faBullhorn} text="Campanhas" onClick={() => [setScreen("campanhas"), setTab("campanhas")]} selected={screen === "campanhas"} />
+                    <SideButton icon={faToolbox} text="Ferramentas" onClick={() => [setScreen("ferramentas"), setTab("ferramentas")]} selected={screen === "ferramentas"} />
                 </div>
                 <div className="flex flex-col gap-2 w-full">
                     <div className="w-full h-[1px] bg-gray-300"></div>
@@ -177,6 +179,7 @@ export default function Dashboard() {
                 {screen == "configuracoes" && <Settings />}
                 {screen == "gerenciador" && <Manager />}
                 {screen == "campanhas" && <Campaigns userId={userId} level={level} />}
+                {screen == "ferramentas" && <Tools />}
             </div>
         </main>
     );

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Vr from "./Vr";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import Confirmation from "./Confirmation";
 
 export default function CampaignItem({ campaignName, campaignDescription, campaignUrl, camapignDestination, campaignUses, onDetails }) {
     const [showCopy, setShowCopy] = useState(false);
@@ -23,11 +24,9 @@ export default function CampaignItem({ campaignName, campaignDescription, campai
 
     return (
         <div className="w-full h-fit bg-neutral-100 py-2 px-4 rounded-xl justify-between flex flex-row items-center gap-2">
-            {showCopy && 
-    <div className="copy-popup w-fit absolute left-[45%] bottom-[10%] h-fit bg-[#faabb0] shadow-md rounded-full z-[999] px-20 py-4 animate-slide-up">
-        <p className="text-sm font-bold text-white">Link copiado!</p>
-    </div>
-}
+            {showCopy &&
+                <Confirmation message={"Link copiado!"}/>
+            }
             <div className="flex flex-col items-center w-full justify-center text-center">
                 <p className="text-sm font-normal">Campanha:</p>
                 <h1 className="text-sm font-bold">{campaignName}</h1>
