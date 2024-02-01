@@ -9,6 +9,7 @@ import RentingItem from "../RentingItem";
 export default function Rentings() {
   const [itemModel, setItemModel] = useState("");
   const itemModels = ["Mamaroos", "Cadeirinhas", "Carrinhos"];
+  const [showRentModal, setShowRentModal] = useState(false);
 
   const handleItemModelChange = (event) => {
     setItemModel(event.target.value);
@@ -21,6 +22,14 @@ export default function Rentings() {
 
   return (
     <div className="w-full h-full flex flex-col justify-start  items-center bg-transparent">
+       {showRentModal &&
+        <Modal modalTitle={"Alugar item"} closeClick={() => { setShowRentModal(!showRentModal) }}>
+          <p className="text-[100pt] my-2 font-normal text-neutral-600">➕</p>
+          <div className="p-1 text-center">
+            
+          </div>
+        </Modal>
+      }
       <input
         className="w-full h-10 px-3 rounded-full border-2 border-neutral-200 focus:outline-none focus:border-[#FAABB0]"
         type="text"

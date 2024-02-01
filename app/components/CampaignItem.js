@@ -53,7 +53,7 @@ export default function CampaignItem({ campaignName, campaignDescription, campai
             </div>
             <Vr />
             <div className="flex flex-col items-center w-full justify-center text-center">
-                <p className="text-sm font-normal">Resultados:</p>
+                <p className="text-sm font-normal">Cliques:</p>
                 <p className="text-sm font-bold">{campaignUses}</p>
             </div>
             <Vr />

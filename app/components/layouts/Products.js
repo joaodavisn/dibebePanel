@@ -14,6 +14,7 @@ export default function Products() {
   const [itemModel, setItemModel] = useState("");
   const [tab, setTab] = useState("alugueis");
   const [showRentItem, setShowRentItem] = useState(false);
+  const [showRentModal, setShowRentModal] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchChange = (event) => {
@@ -47,14 +48,18 @@ export default function Products() {
           <FontAwesomeIcon icon={faStickyNote} />
         </button>
       </div>
-
       {tab === "alugueis" && <div className="w-full h-full flex flex-col gap-2 overflow-y-auto 
       overflow-x-auto justify-start p-4 items-start border-[#faabb0] border-solid 
       border-[2px] rounded-b-lg rounded-tr-lg">
-        { showRentItem && <Modal modalTitle="Alugar item" closeClick={() => {setShowRentItem(!showRentItem)}}>
-
-        </Modal>}
-        <CornerButton onClick={() => {setShowRentItem(!showRentItem)}} title="Alugar item" />
+        {showRentModal &&
+          <Modal modalTitle={"Alugar item"} closeClick={() => { setShowRentModal(!showRentModal) }}>
+            <p className="text-[100pt] my-2 font-normal text-neutral-600">📦</p>
+            <div className="p-1 text-center">
+              {/* CONTENT */}
+            </div>
+          </Modal>
+        }
+        <CornerButton onClick={() => { setShowRentModal(!showRentModal) }} title="Alugar item" />
         <input
           className="w-full h-10 px-3 rounded-full border-2 border-neutral-200 focus:outline-none focus:border-[#FAABB0]"
           type="text"

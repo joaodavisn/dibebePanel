@@ -8,7 +8,9 @@ import Chart from 'chart.js/auto';
 import Image from "next/image";
 import Loading from "../Loading";
 import CornerButton from "../CornerButton";
-export default function Campaigns({ userId }) {
+import balao from "@/sources/media/images/balloon.png";
+
+export default function Campaigns({ userId, level }) {
 
   const [newCampaign, setNewCampaign] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
@@ -21,6 +23,7 @@ export default function Campaigns({ userId }) {
   const [chartRendered, setChartRendered] = useState(false);
   const [campaignCreator, setCampaignCreator] = useState("");
   const [showEditCampaign, setShowEditCampaign] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function getDeviceOrigin(userAgent) {
     if (userAgent.includes("WhatsApp")) {
@@ -121,7 +124,7 @@ export default function Campaigns({ userId }) {
         labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
         datasets: [
           {
-            label: 'Acessos',
+            label: 'Cliques',
             animation: true,
             fill: true,
             data: chartData,
@@ -221,12 +224,13 @@ export default function Campaigns({ userId }) {
   }
 
   const handleCampaignDetails = async (campaignId) => {
-
+    setIsLoading(true);
     try {
       const response = await fetch(`https://api.dibebe.net/functions.php?getCampaignDetails=${campaignId}`);
       if (response.ok) {
         const data = await response.json();
         setCampaignDetails(data);
+        setIsLoading(false);
         setShowCampaignDetails(true);
         getAdminData(data[0].createdBy);
         setChartRendered(false);
@@ -240,13 +244,19 @@ export default function Campaigns({ userId }) {
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center bg-white">
+      {isLoading &&
+        <div className="absolute top-0 left-0 w-screen h-screen flex flex-col justify-center items-center content-center bg-black bg-opacity-50 backdrop-blur-[2px] z-[99]">
+          <Image src={balao} width={50} height={50} alt="Loading" className="animate-ping" />
+        </div>
+      }
       {newCampaign &&
         <Modal modalTitle={"Nova campanha"} closeClick={() => { setNewCampaign(!newCampaign) }}>
+          <p className="text-[90pt] font-normal text-neutral-600">➕</p>
           <div className="p-1 text-center">
-            <p className="text-xl my-12 font-normal text-neutral-600">
+            <p className="text-xl my-2 font-normal text-neutral-600">
               Preencha os campos abaixo para criar uma nova campanha.
             </p>
-            <form className="flex flex-col justify-start items-center gap-4" onSubmit={handleSubmit}>
+            <form className="flex flex-col justify-start items-center gap-2" onSubmit={handleSubmit}>
               <label className="w-full flex flex-col justify-start items-start">
                 <p className="text-left">Nome da campanha</p>
                 <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="Um título para ser fácil de identificar" type="text" value={campaignName} onChange={(event) => { setCampaignName(event.target.value) }} />
@@ -259,7 +269,7 @@ export default function Campaigns({ userId }) {
                 <p className="text-left">Destino da campanha</p>
                 <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="O link para onde a campanha deve levar" type="text" value={campaignDestination} onChange={(event) => { setCampaignDestination(event.target.value) }} />
               </label>
-              <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full mt-10 py-4 px-8" type="submit">Criar campanha</button>
+              <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full py-4 px-8" type="submit">Criar campanha</button>
             </form>
           </div>
         </Modal>
@@ -268,11 +278,12 @@ export default function Campaigns({ userId }) {
         <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-[2px] z-[999] p-8">
           {showEditCampaign &&
             <Modal modalTitle={"Editar Campanha"} closeClick={() => { setShowEditCampaign(!showEditCampaign) }}>
+              <p className="text-[90pt] font-normal text-neutral-600">✏️</p>
               <div className="p-1 text-center">
                 <p className="text-xl my-2 font-normal text-neutral-600">
                   Preencha os campos abaixo para editar a campanha.
                 </p>
-                <form className="flex flex-col justify-start items-center gap-4" onSubmit={handleSubmit}>
+                <form className="flex flex-col justify-start items-center gap-2" onSubmit={handleSubmit}>
                   <label className="w-full flex flex-col justify-start items-start">
                     <p className="text-left">Nome da campanha</p>
                     <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="Um título para ser fácil de identificar" type="text" value={campaignName} onChange={(event) => { setCampaignName(event.target.value) }} />
@@ -285,12 +296,12 @@ export default function Campaigns({ userId }) {
                     <p className="text-left">Destino da campanha</p>
                     <input className="w-full border-2 border-neutral-300 focus:border-[#faabb0] py-2 px-4 rounded-full" placeholder="O link para onde a campanha deve levar" type="text" value={campaignDestination} onChange={(event) => { setCampaignDestination(event.target.value) }} />
                   </label>
-                  <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full mt-10 py-4 px-8" type="submit">Editar campanha</button>
+                  <button className="w-full bg-[#FAABB0] hover:bg-[#f89aa0] text-white rounded-full py-4 px-8" type="submit">Editar campanha</button>
                 </form>
               </div>
             </Modal>
           }
-          <div className="w-full h-full bg-[#f7f7f7] p-1 rounded-2xl ring-2 ring-neutral-300">
+          <div className="w-full h-full shadow-2xl drop-shadow-2xl bg-[#f7f7f7] p-1 rounded-2xl ring-2 ring-neutral-300">
             <div className="w-full h-fit flex flex-row justify-between py-2 pl-4 pr-2">
               <p className="text-xl font-normal text-neutral-600">
                 Detalhes da campanha
@@ -328,17 +339,17 @@ export default function Campaigns({ userId }) {
               </div>
               <div className="w-full h-[1px] bg-neutral-300"></div>
               <div className="w-full h-fit flex flex-row justify-start gap-4 items-center p-4">
-                <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-fit h-fit flex flex-col justify-between items-center gap-4">
+                <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-full h-fit flex flex-col justify-between items-center gap-4">
                   <p className="text-xl font-normal text-neutral-600">
                     Atividade por horário
                   </p>
-                  <div className="w-fit h-fit p-2">
-                    <canvas id="activityChart" width="600" height="300"></canvas>
+                  <div className="w-full h-fit p-2">
+                    <canvas id="activityChart" style={{ width: "100%" }} height="300"></canvas>
                   </div>
                 </div>
                 <div className="bg-neutral-100 ring-2 ring-neutral-200 rounded-xl p-4 w-fit h-fit flex flex-col justify-between items-center gap-4">
                   <p className="text-xl font-normal text-neutral-600">
-                    Origem dos acessos
+                    Origem dos cliques
                   </p>
                   <div className="w-fit h-fit p-2">
                     <canvas id="devicesChart" width="300" height="200"></canvas>
@@ -351,17 +362,20 @@ export default function Campaigns({ userId }) {
       }
 
       <div className="w-full h-fit gap-4 flex flex-col">
-        {campaigns.map(campaign => (
-          <CampaignItem
-            key={campaign.id}
-            campaignName={campaign.campaign}
-            campaignDescription={campaign.description}
-            campaignUrl={campaign.campaignUrl}
-            camapignDestination={campaign.redirect}
-            campaignUses={campaign.uses.toString()}
-            onDetails={() => { handleCampaignDetails(campaign.id) }}
-          />
-        ))}
+        {campaigns
+          .filter(campaign => campaign.createdBy === userId || level > 3)
+          .map(campaign => (
+            <CampaignItem
+              key={campaign.id}
+              campaignName={campaign.campaign}
+              campaignDescription={campaign.description}
+              campaignUrl={campaign.campaignUrl}
+              camapignDestination={campaign.redirect}
+              campaignUses={campaign.uses.toString()}
+              onDetails={() => { handleCampaignDetails(campaign.id) }}
+            />
+          ))
+        }
       </div>
       <CornerButton onClick={() => { setNewCampaign(!newCampaign) }} title={"Nova campanha"} />
     </div>

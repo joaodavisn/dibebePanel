@@ -29,6 +29,7 @@ export default function Dashboard() {
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
     const [userId, setUserId] = useState("");
+    const [level, setLevel] = useState("");
     var date = new Date();
     var hour = date.getHours();
 
@@ -40,6 +41,8 @@ export default function Dashboard() {
             const fullName = JSON.parse(token).name;
             const id = JSON.parse(token).id;
             setUserId(id);
+            const userLevel = JSON.parse(token).level;
+            setLevel(userLevel);
             const firstName = fullName.split(' ')[0];
             setName(firstName);
             setImage(JSON.parse(token).pfp);
@@ -173,7 +176,7 @@ export default function Dashboard() {
                 {screen == "clientes" && <Customers />}
                 {screen == "configuracoes" && <Settings />}
                 {screen == "gerenciador" && <Manager />}
-                {screen == "campanhas" && <Campaigns userId={userId} />}
+                {screen == "campanhas" && <Campaigns userId={userId} level={level} />}
             </div>
         </main>
     );
