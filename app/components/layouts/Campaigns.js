@@ -366,7 +366,7 @@ export default function Campaigns({ userId, level }) {
         </div>
       }
 
-      <div className="w-full h-fit gap-4 flex flex-col overflow-y-auto rounded-lg">
+      <div className="w-full h-full gap-4 flex flex-col overflow-y-auto rounded-lg">
         {campaigns
           .filter(campaign => campaign.createdBy === userId || level > 3)
           .map(campaign => (
