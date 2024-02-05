@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import ToolIcon from "../ToolIcon";
 import ReactInputMask from 'react-input-mask';
 import Confirmation from "../Confirmation";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
 
 export default function Tools() {
     const [showGenerateWhatsAppLink, setShowGenerateWhatsAppLink] = useState(false);
@@ -64,8 +65,9 @@ export default function Tools() {
                     </div>
                 </Modal>
             }
-            <div className="grid grid-cols-4 grid-rows-5 gap-2 w-full h-full p-2">
+            <div className="grid grid-cols-6 grid-rows-5 gap-2 w-full h-full p-2">
                 <ToolIcon icon={faWhatsapp} title="Gerar link do WhatsApp" onClick={() => setShowGenerateWhatsAppLink(true)} />
+                <ToolIcon icon={faFile} title="Gerar Relatório" onClick={() => setShowGenerateWhatsAppLink(true)} />
             </div>
         </div>
     )

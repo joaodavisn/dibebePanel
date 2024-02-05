@@ -58,6 +58,13 @@ export default function Home() {
     }
   };
 
+  if (typeof window !== 'undefined') {
+    var token = localStorage.getItem("token");
+    if (token) {
+      window.location.replace("/pages/dashboard?tab=resumo");
+    }
+  }
+
   return (
     <main className="">
       <div className="flex flex-col items-center justify-center h-screen w-full gap-4">

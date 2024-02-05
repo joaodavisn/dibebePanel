@@ -38,6 +38,8 @@ export default function Campaigns({ userId, level }) {
       return "Linux";
     } else if (userAgent.includes("iPhone")) {
       return "iOS";
+    } else if (userAgent.includes("facebookexternalhit")) {
+      return "Facebook";
     } else {
       return "Unknown device";
     }
