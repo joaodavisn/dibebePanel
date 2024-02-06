@@ -28,6 +28,10 @@ export default function Campaigns({ userId, level }) {
   function getDeviceOrigin(userAgent) {
     if (userAgent.includes("WhatsApp")) {
       return "WhatsApp";
+    } else if (userAgent.includes("316.0.0.38.109")) {
+      return "Instagram ANDROID";
+    } else if (userAgent.includes("316.1.8.22.112")) {
+      return "Instagram IOS";
     } else if (userAgent.includes("Android")) {
       return "Android";
     } else if (userAgent.includes("Windows NT")) {
@@ -43,7 +47,7 @@ export default function Campaigns({ userId, level }) {
     } else {
       return "Unknown device";
     }
-  }
+}
 
   useEffect(() => {
     if (showCampaingDetails && !chartRendered) {
