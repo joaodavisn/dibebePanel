@@ -47,7 +47,7 @@ export default function Campaigns({ userId, level }) {
     } else {
       return "Unknown device";
     }
-}
+  }
 
   useEffect(() => {
     if (showCampaingDetails && !chartRendered) {
@@ -387,7 +387,7 @@ export default function Campaigns({ userId, level }) {
         }
       </div>
       <div className="w-full h-fit flex flex-row justify-end items-end pt-4">
-      <CornerButton onClick={() => { setNewCampaign(!newCampaign) }} title={"Nova campanha"} />
+        <CornerButton onClick={() => { setNewCampaign(!newCampaign) }} title={"Nova campanha"} />
       </div>
     </div>
   )
